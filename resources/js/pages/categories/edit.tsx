@@ -34,7 +34,6 @@ export default function Edit({ category }: Props) {
 
     const { data, setData, put, errors, processing } = useForm({
         name: category.name,
-        slug: category.slug,
     });
 
     function submit(e: React.FormEvent) {
@@ -67,16 +66,6 @@ export default function Edit({ category }: Props) {
                                         required
                                     />
                                     <InputError message={errors.name} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="slug">Slug (optional)</Label>
-                                    <Input
-                                        id="slug"
-                                        type="text"
-                                        value={data.slug}
-                                        onChange={(e) => setData('slug', e.target.value)}
-                                    />
-                                     <InputError message={errors.slug} />
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <Button type="submit" disabled={processing}>Save Changes</Button>

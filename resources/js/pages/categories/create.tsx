@@ -26,7 +26,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Create() {
     const { data, setData, post, errors, processing } = useForm({
         name: '',
-        slug: '',
     });
 
     function submit(e: React.FormEvent) {
@@ -59,16 +58,6 @@ export default function Create() {
                                         required
                                     />
                                     <InputError message={errors.name} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="slug">Slug (optional)</Label>
-                                    <Input
-                                        id="slug"
-                                        type="text"
-                                        value={data.slug}
-                                        onChange={(e) => setData('slug', e.target.value)}
-                                    />
-                                     <InputError message={errors.slug} />
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <Button type="submit" disabled={processing}>Save</Button>
