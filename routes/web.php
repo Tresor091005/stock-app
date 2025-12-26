@@ -16,10 +16,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::resource('categories', \App\Http\Controllers\CategoryController::class)->names('categories');
-    Route::resource('products', \App\Http\Controllers\ProductController::class)->names('products');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('customer.redirect');
 
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 
@@ -28,13 +25,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
     Route::resource('orders', \App\Http\Controllers\OrderController::class)->names('orders');
-    Route::patch('orders/{order}/status', [\App\Http\Controllers\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::resource('products', \App\Http\Controllers\ProductController::class)->only(['show']);
 
-    Route::resource('users', \App\Http\Controllers\UserController::class)->only(['index', 'show'])->names('users');
-    Route::resource('email-logs', EmailLogController::class)->only(['index', 'show'])->names('email-logs');
-
-    Route::post('/commands/send-daily-sales-report', [CommandController::class, 'sendDailySalesReport'])
-        ->name('commands.sendDailySalesReport');
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('categories', \App\Http\Controllers\CategoryController::class)->names('categories');
+        Route::resource('products', \App\Http\Controllers\ProductController::class)->except(['show']);
+        Route::patch('orders/{order}/status', [\App\Http\Controllers\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+        Route::resource('users', \App\Http\Controllers\UserController::class)->only(['index', 'show'])->names('users');
+        Route::resource('email-logs', EmailLogController::class)->only(['index', 'show'])->names('email-logs');
+        Route::post('/commands/send-daily-sales-report', [CommandController::class, 'sendDailySalesReport'])
+            ->name('commands.sendDailySalesReport');
+    });
 });
 
 require __DIR__.'/settings.php';

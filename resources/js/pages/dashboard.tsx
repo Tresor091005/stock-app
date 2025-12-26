@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { usePage } from '@inertiajs/react';
+import { getImageUrl } from '@/lib/utils';
 import { sendDailySalesReport } from '@/routes/commands';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -102,7 +103,7 @@ export default function Dashboard({ stats, recentOrders, lowStockProducts }: Das
                                 {recentOrders.map((order) => (
                                     <div className="flex items-center" key={order.id}>
                                         <Avatar className="h-9 w-9">
-                                            <AvatarImage src={order.user.avatar} alt="Avatar" />
+                                            <AvatarImage src={getImageUrl(order.user.avatar)} alt="Avatar" />
                                             <AvatarFallback>{order.user.name.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                         <div className="ml-4 space-y-1">
@@ -126,7 +127,7 @@ export default function Dashboard({ stats, recentOrders, lowStockProducts }: Das
                                 {lowStockProducts.map((product) => (
                                     <div className="flex items-center" key={product.id}>
                                         <Avatar className="h-9 w-9">
-                                            <AvatarImage src={product.image ? `/storage/${product.image}`: `https://via.placeholder.com/150`} alt={product.name} />
+                                            <AvatarImage src={getImageUrl(product.image)} alt={product.name} />
                                             <AvatarFallback>{product.name.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                         <div className="ml-4 space-y-1">

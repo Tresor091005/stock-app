@@ -19,7 +19,7 @@ import { index as shopIndex } from '@/routes/shop';
 import { index as emailLogsIndex } from '@/routes/email-logs';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, LayoutList, Mail, ShoppingCart, Users } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Store, Mail, ShoppingCart, Users, FolderTree, Package } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const baseMainNavItems: NavItem[] = [
@@ -27,11 +27,12 @@ const baseMainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard().url,
         icon: LayoutGrid,
+        adminOnly: true
     },
     {
         title: 'Shop',
         href: shopIndex().url,
-        icon: LayoutList
+        icon: Store
     },
     {
         title: 'Orders',
@@ -41,22 +42,26 @@ const baseMainNavItems: NavItem[] = [
     {
         title: 'Categories',
         href: categoriesIndex().url,
-        icon: LayoutList,
+        icon: FolderTree,
+        adminOnly: true,
     },
     {
         title: 'Products',
         href: productsIndex().url,
-        icon: LayoutList,
+        icon: Package,
+        adminOnly: true,
     },
     {
         title: 'Users',
         href: usersIndex().url,
         icon: Users,
+        adminOnly: true,
     },
     {
         title: 'Email Logs',
         href: emailLogsIndex().url,
         icon: Mail,
+        adminOnly: true,
     }
 ];
 
@@ -77,7 +82,7 @@ export function AppSidebar() {
     const { auth } = usePage().props as any;
     const is_admin = auth.user?.role === 'admin';
 
-    const currentMainNavItems = [...baseMainNavItems];
+    const currentMainNavItems = is_admin ? baseMainNavItems : baseMainNavItems.filter(item => !item.adminOnly);
 
     return (
         <Sidebar collapsible="icon" variant="floating">

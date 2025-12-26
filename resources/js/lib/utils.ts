@@ -16,3 +16,13 @@ export function isSameUrl(
 export function resolveUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
 }
+
+export function getImageUrl(path: string | null | undefined): string {
+    if (!path) {
+        return '';
+    }
+    if (path.startsWith('http') || path.startsWith('https')) {
+        return path;
+    }
+    return `/storage/${path}`;
+}

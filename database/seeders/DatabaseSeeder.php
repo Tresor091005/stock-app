@@ -1,6 +1,8 @@
 <?php
 
+
 namespace Database\Seeders;
+
 
 use App\Enums\UserRole;
 use App\Models\Category;
@@ -8,6 +10,7 @@ use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+
         User::firstOrCreate(
             ['email' => 'customer@example.com'],
             [
@@ -36,19 +40,25 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+
         $this->seedCategoriesAndProducts();
     }
+
 
     protected function seedCategoriesAndProducts()
     {
         $faker = \Faker\Factory::create();
+        $imageId = 1;
+
 
         $categories = [
             'Electronics', 'Books', 'Clothing', 'Home & Kitchen', 'Toys & Games', 'Sports & Outdoors'
         ];
 
+
         foreach ($categories as $categoryName) {
             $category = Category::create(['name' => $categoryName]);
+
 
             $products = match ($categoryName) {
                 'Electronics' => ['Laptop', 'Smartphone', 'Headphones', 'Smartwatch', 'Camera', 'Tablet', 'Monitor'],
@@ -60,6 +70,7 @@ class DatabaseSeeder extends Seeder
                 default => [],
             };
 
+
             foreach ($products as $productName) {
                 Product::create([
                     'category_id' => $category->id,
@@ -67,8 +78,10 @@ class DatabaseSeeder extends Seeder
                     'description' => $faker->sentence,
                     'price' => $faker->randomFloat(2, 10, 1000),
                     'stock_quantity' => $faker->numberBetween(0, 100),
-                    'image' => $faker->imageUrl(),
+                    'image' => "https://picsum.photos/id/{$imageId}/800/600",
                 ]);
+                
+                $imageId++;
             }
         }
     }

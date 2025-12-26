@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ProductCartActions } from '@/components/carts/product-cart-actions';
 import { Link } from '@inertiajs/react';
 import { show as productsShow } from '@/routes/products';
+import { getImageUrl } from '@/lib/utils';
 
 interface ProductCardProps {
     product: Product;
@@ -30,7 +31,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <CardContent className="flex-grow">
                     <div className="overflow-hidden rounded-md">
                         <img
-                            src={product.image ? `/storage/${product.image}` : `https://via.placeholder.com/150`}
+                            src={getImageUrl(product.image) || 'https://via.placeholder.com/150'}
                             alt={product.name}
                             className="w-full h-48 object-cover rounded-md group-hover:scale-105 transition-transform duration-300 ease-in-out"
                         />

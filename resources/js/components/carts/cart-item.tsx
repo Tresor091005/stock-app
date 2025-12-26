@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useDebounce } from '@/hooks/use-debounce';
 import { type CartItem as CartItemType } from '@/hooks/use-cart';
+import { getImageUrl } from '@/lib/utils';
 
 interface CartItemProps {
     item: CartItemType;
@@ -35,7 +36,7 @@ export function CartItem({ item, updateQuantity, removeFromCart }: CartItemProps
     return (
         <div className="flex items-center gap-4 py-4">
             <img
-                src={item.product.image ? `/storage/${item.product.image}` : `https://via.placeholder.com/64`}
+                src={getImageUrl(item.product.image) || 'https://via.placeholder.com/64'}
                 alt={item.product.name}
                 className="h-16 w-16 rounded-md object-cover"
             />

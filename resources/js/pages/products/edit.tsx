@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import InputError from '@/components/input-error';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { getImageUrl } from '@/lib/utils';
 import { 
     index as productsIndex, 
     edit as productsEdit,
@@ -150,7 +151,7 @@ export default function Edit({ product, categories }: Props) {
                                 {product.image && !data.image && (
                                     <div className="grid gap-2">
                                         <Label>Current Image</Label>
-                                        <img src={`/storage/${product.image}`} alt={product.name} className="w-20 h-20 object-cover rounded-md" />
+                                        <img src={getImageUrl(product.image)} alt={product.name} className="w-20 h-20 object-cover rounded-md" />
                                     </div>
                                 )}
 

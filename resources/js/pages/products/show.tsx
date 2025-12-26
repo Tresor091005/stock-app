@@ -3,6 +3,7 @@ import { type BreadcrumbItem, type Product } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { getImageUrl } from '@/lib/utils';
 import { 
     index as productsIndex, 
     show as productsShow,
@@ -83,7 +84,7 @@ export default function Show({ product }: Props) {
                         </CardHeader>
                         <CardContent>
                             {product.image ? (
-                                <img src={`/storage/${product.image}`} alt={product.name} className="w-full h-auto object-cover rounded-md" />
+                                <img src={getImageUrl(product.image)} alt={product.name} className="w-full h-auto object-cover rounded-md" />
                             ) : (
                                 <div className="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-800 rounded-md">
                                     <p className="text-gray-500 dark:text-gray-400">No Image</p>
