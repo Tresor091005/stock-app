@@ -6,3 +6,4 @@
 TODO
 - redirect to shop when customer click on products 
 - customer can't see edit button
+- only one way to verify authorisation

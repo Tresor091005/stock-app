@@ -8,6 +8,7 @@ interface CartContextType {
     updateQuantity: (productId: number, quantity: number) => Promise<void>;
     removeFromCart: (productId: number) => Promise<void>;
     loading: boolean;
+    fetchCartItems: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);

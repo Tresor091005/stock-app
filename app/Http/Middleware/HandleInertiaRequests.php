@@ -46,7 +46,12 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'success' => fn () => $request->session()->get('success'),
+            'success' => $request->session()->has('success')
+                ? ['message' => $request->session()->get('success'), 'id' => uniqid()]
+                : null,
+            'error' => $request->session()->has('error')
+                ? ['message' => $request->session()->get('error'), 'id' => uniqid()]
+                : null,
         ];
     }
 }

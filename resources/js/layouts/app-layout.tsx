@@ -12,13 +12,16 @@ interface AppLayoutProps {
 
 export default ({ children, breadcrumbs, ...props }: AppLayoutProps) => {
     const { props: pageProps } = usePage<SharedData>();
-    const { success } = pageProps;
+    const { success, error } = pageProps;
 
     useEffect(() => {
         if (success) {
-            toast.success(success);
+            toast.success(success.message);
         }
-    }, [success]);
+        if (error) {
+            toast.error(error.message);
+        }
+    }, [success, error]);
 
     return (
         <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>

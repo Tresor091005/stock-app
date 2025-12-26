@@ -27,7 +27,8 @@ export interface SharedData {
     quote: { message: string; author:string };
     auth: Auth;
     sidebarOpen: boolean;
-    success?: string;
+    success?: { message: string, id: string };
+    error?: { message: string, id: string };
     [key: string]: unknown;
 }
 
@@ -78,5 +79,24 @@ export interface PaginatedResponse<T> {
     prev_page_url: string | null;
     to: number;
     total: number;
+}
+
+export interface Order {
+    id: number;
+    user_id: number;
+    total_amount: number;
+    status: 'pending' | 'processing' | 'completed' | 'cancelled';
+    created_at: string;
+    updated_at: string;
+    user: User;
+    items: OrderItem[];
+}
+
+export interface OrderItem {
+    id: number;
+    product_id: number;
+    quantity: number;
+    price: number;
+    product: Product;
 }
 
