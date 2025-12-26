@@ -13,6 +13,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as categoriesIndex } from '@/routes/categories';
 import { index as productsIndex } from '@/routes/products';
+import { index as shopIndex } from '@/routes/shop';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, LayoutList } from 'lucide-react';
@@ -34,6 +35,11 @@ const mainNavItems: NavItem[] = [
         href: productsIndex().url,
         icon: LayoutList,
     },
+    {
+        title: 'Shop',
+        href: shopIndex().url,
+        icon: LayoutList
+    }
 ];
 
 const footerNavItems: NavItem[] = [

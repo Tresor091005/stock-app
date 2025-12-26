@@ -2,12 +2,13 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Product } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { 
     index as productsIndex, 
     show as productsShow,
     edit as productsEdit,
 } from '@/routes/products';
+import { ProductCartActions } from '@/components/carts/product-cart-actions';
 
 type Props = {
     product: Product;
@@ -44,28 +45,38 @@ export default function Show({ product }: Props) {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                    <Card className="lg:col-span-4">
-                        <CardHeader>
-                            <CardTitle>Product Details</CardTitle>
-                            <CardDescription>{product.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent className="grid gap-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Price</p>
-                                    <p className="text-lg font-semibold">{formattedPrice}</p>
+                    <div className="lg:col-span-4 flex flex-col gap-4">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Product Details</CardTitle>
+                                <CardDescription>{product.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="grid gap-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Price</p>
+                                        <p className="text-lg font-semibold">{formattedPrice}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Stock</p>
+                                        <p className="text-lg font-semibold">{product.stock_quantity}</p>
+                                    </div>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Stock</p>
-                                    <p className="text-lg font-semibold">{product.stock_quantity}</p>
+                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Category</p>
+                                    <p className="text-lg font-semibold">{product.category.name}</p>
                                 </div>
-                            </div>
-                            <div>
-                                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Category</p>
-                                <p className="text-lg font-semibold">{product.category.name}</p>
-                            </div>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                        <Card className="relative">
+                            <CardHeader>
+                                <CardTitle>Add to Cart</CardTitle>
+                            </CardHeader>
+                            <CardFooter>
+                                <ProductCartActions product={product} />
+                            </CardFooter>
+                        </Card>
+                    </div>
                     <Card className="lg:col-span-3">
                         <CardHeader>
                             <CardTitle>Product Image</CardTitle>

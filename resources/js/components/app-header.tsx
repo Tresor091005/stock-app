@@ -34,13 +34,21 @@ import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { index as categoriesIndex } from '@/routes/categories';
 import { index as productsIndex } from '@/routes/products';
+import { index as shopIndex } from '@/routes/shop';
 import { BookOpen, Folder, LayoutGrid, LayoutList, Menu, Search } from 'lucide-react';
+import AppLogo from './app-logo';
+import AppLogoIcon from './app-logo-icon'
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard().url,
         icon: LayoutGrid,
+    },
+    {
+        title: 'Shop',
+        href: shopIndex().url,
+        icon: LayoutList,
     },
     {
         title: 'Categories',
@@ -150,7 +158,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     </div>
 
                     <Link
-                        href={dashboard()}
+                        href={dashboard().url}
                         prefetch
                         className="flex items-center space-x-2"
                     >

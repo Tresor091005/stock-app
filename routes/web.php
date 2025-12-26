@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -17,6 +19,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('categories', \App\Http\Controllers\CategoryController::class)->names('categories');
     Route::resource('products', \App\Http\Controllers\ProductController::class)->names('products');
+
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::put('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 });
 
 require __DIR__.'/settings.php';
