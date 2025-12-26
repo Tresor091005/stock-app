@@ -2,12 +2,6 @@
 - use enums to track strict values 
 - use debounce on cart-sheet to reduce api calls (still high but better than nothing)
 
-
-TODO
-- redirect to shop when customer click on products 
-- customer can't see edit button
-- only one way to verify authorisation
-
 WOULD WANT
 - websocket to avoid necessity to refresh pages
 - multi language
