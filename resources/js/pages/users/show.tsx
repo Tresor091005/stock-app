@@ -66,7 +66,7 @@ export default function Show({ user, orders: paginatedOrders }: Props) {
                             </CardContent>
                         </Card>
                     </div>
-                    {/* <div className="md:col-span-2 space-y-6">
+                    <div className="md:col-span-2 space-y-6">
                         <Card>
                             <CardHeader>
                                 <CardTitle>User Orders</CardTitle>
@@ -80,7 +80,7 @@ export default function Show({ user, orders: paginatedOrders }: Props) {
                                 )}
                             </CardContent>
                         </Card>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </AppLayout>

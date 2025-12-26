@@ -53,6 +53,13 @@ export function initializeTheme() {
 export function useAppearance() {
     const [appearance, setAppearance] = useState<Appearance>('system');
 
+    const resolvedTheme =
+        appearance === 'system'
+            ? prefersDark()
+                ? 'dark'
+                : 'light'
+            : appearance;
+
     const updateAppearance = useCallback((mode: Appearance) => {
         setAppearance(mode);
 
@@ -73,12 +80,18 @@ export function useAppearance() {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         updateAppearance(savedAppearance || 'system');
 
+        const mediaQueryListener = () => {
+            if (localStorage.getItem('appearance') === 'system') {
+                // To trigger a re-render
+                setAppearance('system');
+            }
+        };
+
+        mediaQuery()?.addEventListener('change', mediaQueryListener);
+
         return () =>
-            mediaQuery()?.removeEventListener(
-                'change',
-                handleSystemThemeChange,
-            );
+            mediaQuery()?.removeEventListener('change', mediaQueryListener);
     }, [updateAppearance]);
 
-    return { appearance, updateAppearance } as const;
+    return { appearance, updateAppearance, resolvedTheme } as const;
 }

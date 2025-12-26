@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,11 +26,13 @@ class UserController extends Controller
     {
         abort_unless(Auth::user()->role === UserRole::ADMIN, 403, 'You are not authorized to view this page.');
         
-        $user->load(['orders.items.product']);
+        $orders = Order::with(['user:id,name', 'items.product:id,name'])
+            ->where('user_id', $user->id)
+            ->latest()->paginate(10);
 
         return Inertia::render('users/show', [
             'user' => $user,
-            'orders' => $user->orders
+            'orders' => $orders
         ]);
     }
 }

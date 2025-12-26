@@ -28,6 +28,16 @@ const baseMainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
+        title: 'Shop',
+        href: shopIndex().url,
+        icon: LayoutList
+    },
+    {
+        title: 'Orders',
+        href: ordersIndex().url,
+        icon: ShoppingCart,
+    },
+    {
         title: 'Categories',
         href: categoriesIndex().url,
         icon: LayoutList,
@@ -38,23 +48,23 @@ const baseMainNavItems: NavItem[] = [
         icon: LayoutList,
     },
     {
-        title: 'Orders',
-        href: ordersIndex().url,
-        icon: ShoppingCart,
-    },
+        title: 'Users',
+        href: usersIndex().url,
+        icon: Users,
+    }
 ];
 
 const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Repository',
+    //     href: 'https://github.com/laravel/react-starter-kit',
+    //     icon: Folder,
+    // },
+    // {
+    //     title: 'Documentation',
+    //     href: 'https://laravel.com/docs/starter-kits#react',
+    //     icon: BookOpen,
+    // },
 ];
 
 export function AppSidebar() {
@@ -62,20 +72,6 @@ export function AppSidebar() {
     const is_admin = auth.user?.role === 'admin';
 
     const currentMainNavItems = [...baseMainNavItems];
-
-    if (is_admin) {
-        currentMainNavItems.push({
-            title: 'Users',
-            href: usersIndex().url,
-            icon: Users,
-        });
-    }
-
-    currentMainNavItems.push({
-        title: 'Shop',
-        href: shopIndex().url,
-        icon: LayoutList
-    });
 
     return (
         <Sidebar collapsible="icon" variant="floating">

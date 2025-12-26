@@ -15,9 +15,14 @@ const formattedPrice = (price: number) =>
     }).format(price);
 
 export function ProductCard({ product }: ProductCardProps) {
+    const isOutOfStock = product.stock_quantity === 0;
+
     return (
-        <Card className="flex flex-col relative group">
-            <Link href={productsShow({ product: product.id }).url} className="flex flex-col flex-grow">
+        <Card className={`flex flex-col relative group ${isOutOfStock ? 'opacity-50' : ''}`}>
+            <Link
+                href={productsShow({ product: product.id }).url}
+                className={`flex flex-col flex-grow ${isOutOfStock ? 'pointer-events-none' : ''}`}
+            >
                 <CardHeader>
                     <CardTitle className="group-hover:text-primary">{product.name}</CardTitle>
                     <CardDescription>{product.category.name}</CardDescription>
@@ -31,11 +36,18 @@ export function ProductCard({ product }: ProductCardProps) {
                         />
                     </div>
                     <p className="text-lg font-semibold mt-4">{formattedPrice(product.price)}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 flex-grow line-clamp-2">{product.description}</p>
+                    {product.stock_quantity > 0 && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            In stock: {product.stock_quantity}
+                        </p>
+                    )}
+                    <p className="text-sm text-gray-500 dark:text-gray-400 flex-grow line-clamp-2">
+                        {product.description}
+                    </p>
                 </CardContent>
             </Link>
             <CardFooter>
-                <ProductCartActions product={product} />
+                <ProductCartActions product={product} disabled={isOutOfStock} />
             </CardFooter>
         </Card>
     );

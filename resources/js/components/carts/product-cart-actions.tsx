@@ -7,21 +7,30 @@ import { Button } from '@/components/ui/button';
 
 interface ProductCartActionsProps {
     product: Product;
+    disabled?: boolean;
 }
 
-export function ProductCartActions({ product }: ProductCartActionsProps) {
+export function ProductCartActions({ product, disabled }: ProductCartActionsProps) {
     const { updateQuantity, cartItems } = useCartContext();
     const [quantityToAdd, setQuantityToAdd] = useState(1);
     const [isAdding, setIsAdding] = useState(false);
 
     const cartItem = cartItems.find((item) => item.product.id === product.id);
     const quantityInCart = cartItem?.quantity ?? 0;
+    const maxQuantityCanAdd = product.stock_quantity - quantityInCart;
 
     const handleAddToCart = async () => {
-        if (quantityToAdd > 0 && !isAdding) {
+        if (quantityToAdd > 0 && !isAdding && !disabled) {
+            const actualQuantityToAdd = Math.min(quantityToAdd, maxQuantityCanAdd);
+
+            if (actualQuantityToAdd <= 0) {
+                toast.error("Cannot add more, product is out of stock or you have reached the maximum available.");
+                return;
+            }
+
             setIsAdding(true);
             try {
-                const newTotalQuantity = quantityInCart + quantityToAdd;
+                const newTotalQuantity = quantityInCart + actualQuantityToAdd;
                 await updateQuantity(product.id, newTotalQuantity);
                 setQuantityToAdd(1);
             } catch (error) {
@@ -43,15 +52,19 @@ export function ProductCartActions({ product }: ProductCartActionsProps) {
                 <Input
                     type="number"
                     value={quantityToAdd}
-                    onChange={(e) => setQuantityToAdd(Math.max(1, parseInt(e.target.value) || 1))}
+                    onChange={(e) => {
+                        const value = parseInt(e.target.value);
+                        setQuantityToAdd(Math.max(1, Math.min(value || 1, maxQuantityCanAdd)));
+                    }}
                     className="h-9 w-16 text-center"
                     min="1"
-                    disabled={isAdding}
+                    max={maxQuantityCanAdd > 0 ? maxQuantityCanAdd : 1}
+                    disabled={isAdding || disabled || maxQuantityCanAdd <= 0}
                 />
-                <Button 
-                    className="flex-1" 
+                <Button
+                    className="flex-1"
                     onClick={handleAddToCart}
-                    disabled={isAdding}
+                    disabled={isAdding || disabled || maxQuantityCanAdd <= 0}
                 >
                     {isAdding ? 'Ajout...' : 'Ajouter au panier'}
                 </Button>
