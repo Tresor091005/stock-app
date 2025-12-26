@@ -16,9 +16,10 @@ import { index as productsIndex } from '@/routes/products';
 import { index as ordersIndex } from '@/routes/orders';
 import { index as usersIndex } from '@/routes/users';
 import { index as shopIndex } from '@/routes/shop';
+import { index as emailLogsIndex } from '@/routes/email-logs';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, LayoutList, ShoppingCart, Users } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, LayoutList, Mail, ShoppingCart, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const baseMainNavItems: NavItem[] = [
@@ -51,6 +52,11 @@ const baseMainNavItems: NavItem[] = [
         title: 'Users',
         href: usersIndex().url,
         icon: Users,
+    },
+    {
+        title: 'Email Logs',
+        href: emailLogsIndex().url,
+        icon: Mail,
     }
 ];
 

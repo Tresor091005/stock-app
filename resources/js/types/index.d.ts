@@ -101,3 +101,13 @@ export interface OrderItem {
     product: Product;
 }
 
+export interface EmailLog {
+    id: number;
+    type: string;
+    recipient: string;
+    subject: string;
+    content: string;
+    sent_at: string;
+    created_at: string;
+    updated_at: string;
+}

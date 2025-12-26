@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailLogController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('orders/{order}/status', [\App\Http\Controllers\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
     Route::resource('users', \App\Http\Controllers\UserController::class)->only(['index', 'show'])->names('users');
+    Route::resource('email-logs', EmailLogController::class)->only(['index', 'show'])->names('email-logs');
 });
 
 require __DIR__.'/settings.php';

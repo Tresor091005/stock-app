@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -84,6 +85,8 @@ class OrderController extends Controller
             $user->cartItems()->delete();
 
             DB::commit();
+
+            event(new OrderCreated($order));
 
             return redirect()->back()->with('success', 'Order placed successfully.');
 
