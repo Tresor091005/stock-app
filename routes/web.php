@@ -14,6 +14,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::resource('categories', \App\Http\Controllers\CategoryController::class)->names('categories');
 });
 
 require __DIR__.'/settings.php';
