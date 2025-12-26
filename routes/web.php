@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('categories', \App\Http\Controllers\CategoryController::class)->names('categories');
+    Route::resource('products', \App\Http\Controllers\ProductController::class)->names('products');
 });
 
 require __DIR__.'/settings.php';

@@ -24,9 +24,10 @@ export interface NavItem {
 
 export interface SharedData {
     name: string;
-    quote: { message: string; author: string };
+    quote: { message: string; author:string };
     auth: Auth;
     sidebarOpen: boolean;
+    success?: string;
     [key: string]: unknown;
 }
 
@@ -46,6 +47,19 @@ export interface Category {
     id: number;
     name: string;
     slug: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Product {
+    id: number;
+    name: string;
+    description: string | null;
+    price: number;
+    stock_quantity: number;
+    image: string | null;
+    category_id: number;
+    category: Category;
     created_at: string;
     updated_at: string;
 }
