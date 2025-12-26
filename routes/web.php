@@ -28,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('orders', \App\Http\Controllers\OrderController::class)->names('orders');
     Route::patch('orders/{order}/status', [\App\Http\Controllers\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+    Route::resource('users', \App\Http\Controllers\UserController::class)->only(['index', 'show'])->names('users');
 });
 
 require __DIR__.'/settings.php';

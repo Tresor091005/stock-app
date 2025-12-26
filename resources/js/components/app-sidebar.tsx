@@ -14,13 +14,14 @@ import { dashboard } from '@/routes';
 import { index as categoriesIndex } from '@/routes/categories';
 import { index as productsIndex } from '@/routes/products';
 import { index as ordersIndex } from '@/routes/orders';
+import { index as usersIndex } from '@/routes/users';
 import { index as shopIndex } from '@/routes/shop';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, LayoutList, ShoppingCart } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, Folder, LayoutGrid, LayoutList, ShoppingCart, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+const baseMainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard().url,
@@ -41,11 +42,6 @@ const mainNavItems: NavItem[] = [
         href: ordersIndex().url,
         icon: ShoppingCart,
     },
-    {
-        title: 'Shop',
-        href: shopIndex().url,
-        icon: LayoutList
-    }
 ];
 
 const footerNavItems: NavItem[] = [
@@ -62,6 +58,25 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const { auth } = usePage().props as any;
+    const is_admin = auth.user?.role === 'admin';
+
+    const currentMainNavItems = [...baseMainNavItems];
+
+    if (is_admin) {
+        currentMainNavItems.push({
+            title: 'Users',
+            href: usersIndex().url,
+            icon: Users,
+        });
+    }
+
+    currentMainNavItems.push({
+        title: 'Shop',
+        href: shopIndex().url,
+        icon: LayoutList
+    });
+
     return (
         <Sidebar collapsible="icon" variant="floating">
             <SidebarHeader>
@@ -77,7 +92,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={currentMainNavItems} />
             </SidebarContent>
 
             <SidebarFooter>
@@ -87,4 +102,3 @@ export function AppSidebar() {
         </Sidebar>
     );
 }
-
