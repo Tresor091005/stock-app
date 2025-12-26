@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommandController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailLogController;
 use App\Http\Controllers\ShopController;
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('users', \App\Http\Controllers\UserController::class)->only(['index', 'show'])->names('users');
     Route::resource('email-logs', EmailLogController::class)->only(['index', 'show'])->names('email-logs');
+
+    Route::post('/commands/send-daily-sales-report', [CommandController::class, 'sendDailySalesReport'])
+        ->name('commands.sendDailySalesReport');
 });
 
 require __DIR__.'/settings.php';
